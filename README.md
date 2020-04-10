@@ -2,5 +2,7 @@
 ### Todo list
 - [x] Initialize weights, baises, activations
 - [x] Forward Propagation
-- [ ] Back Propagation
+- [x] Back Propagation
 - [ ] Training method
+- [ ] Refactorisation
+
