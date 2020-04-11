@@ -5,4 +5,4 @@
 - [x] Back Propagation
 - [ ] Training method
 - [ ] Refactorisation
-
+- [ ] Update Readme

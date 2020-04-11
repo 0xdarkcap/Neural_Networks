@@ -33,7 +33,7 @@ class NN:
             # print(self.z[i].shape)
         return self.activations[-1]
 
-    def back_propagation(self, x, y):
+    def back_propagation(self, x, y, lr):
         x = np.array(x)
         y = np.array(y)
         """
@@ -77,8 +77,20 @@ class NN:
         # Calculate gradient of cost function wrt weights and biases (Using equation 3 and 4)
         delta_bias = np.array([self.error[i + 1] for i in range(len(self.layers) - 1)])
         delta_weight = np.array([self.error[i + 1] * self.activations[i].T for i in range(len(self.layers) - 1)])
-        self.weights -= 0.01 * delta_weight
-        self.bias[1:] -= 0.01 * delta_bias
+
+        self.weights -= lr * delta_weight
+        self.bias[1:] -= lr * delta_bias
+
+    def train(self, x, y, epochs, lr):
+        cost = []
+        for i in range(epochs):
+            for j in range(len(x)):
+                self.back_propagation(x[j], y[j], lr)
+                cost.append(np.mean(self.cost(x[j], y[j])))
+            print("for epoch {}, cost = {}".format(i, np.mean(cost)))
+
+    def predict(self, x):
+        return np.argmax(self.forward_pass(x))
 
     def cost(self, x, y):
         return 1 / 2 * (self.forward_pass(x) - y) ** 2
@@ -90,6 +102,7 @@ class NN:
         return 1 / (1 + np.exp(-z))
 
 
+"""
 if __name__ == "__main__":
     nn = NN()
     x = np.array([1, 2])
@@ -103,3 +116,4 @@ if __name__ == "__main__":
         for j in range(4):
             nn.back_propagation([x1[j], x2[j]], [y[j]])
             print(nn.cost([x1[j], x2[j]], [y[j]]))
+"""
